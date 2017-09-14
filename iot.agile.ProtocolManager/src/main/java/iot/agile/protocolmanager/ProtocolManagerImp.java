@@ -92,7 +92,7 @@ public class ProtocolManagerImp extends AbstractAgileObject implements ProtocolM
 		ProtocolManager protocolManager = new ProtocolManagerImp();
 
 		// for demo purposes
-		protocolManager.Add(BLE_PROTOCOL_ID);
+		//protocolManager.Add(BLE_PROTOCOL_ID);
 		protocolManager.Add(DUMMY_PROTOCOL_ID);
  	}
 

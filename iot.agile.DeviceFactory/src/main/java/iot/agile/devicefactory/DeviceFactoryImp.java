@@ -58,7 +58,8 @@ public class DeviceFactoryImp extends AbstractAgileObject implements DeviceFacto
     /**
      * The path of the directory where the classes are loaded from
      */
-    private static final String CLASSPATH_DIR = "classes/iot/agile/device/instance";
+    // JES CHANGE private static final String CLASSPATH_DIR = "classes/iot/agile/device/instance";
+    private static final String CLASSPATH_DIR = "iot/agile/device/instance";
     
     /**
      * The directory where .class files can be dropped
