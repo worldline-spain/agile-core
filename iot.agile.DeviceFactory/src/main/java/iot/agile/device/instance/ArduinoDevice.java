@@ -18,7 +18,7 @@ public class ArduinoDevice extends DeviceImp implements Device {
 	protected Logger logger = LoggerFactory.getLogger(ArduinoDevice.class);
 	
 	
-	private static final String ZB = "zb/";	
+	private static final String ZB = "zb";	
 	private static final String ZB_PROTOCOL_ID = "iot.agile.Protocol";
 	private static final String ZB_PROTOCOL_PATH = "/iot/agile/Protocol/XBee_ZigBee/socket0";
 	
