@@ -46,10 +46,15 @@ import org.freedesktop.dbus.exceptions.DBusException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import iot.agile.exception.AgileDeviceNotFoundException;
 import iot.agile.exception.AgileNoResultException;
+import iot.agile.http.resource.DeviceManager.RegisterPayload;
 import iot.agile.http.service.DbusClient;
 import iot.agile.object.DeviceComponent;
+import iot.agile.object.DeviceOverview;
 import iot.agile.object.RecordObject;
 import iot.agile.object.StatusType;
 
@@ -197,15 +202,17 @@ public class Device {
 	@Produces(MediaType.APPLICATION_JSON)
 	public RecordObject Read(@PathParam("id") String id, @PathParam("sensorName") String sensorName)
 			throws DBusException {
-    try {
-      return getDevice(id).Read(sensorName);
-    } catch (AgileNoResultException e) {
-      return null;
-    } catch (UnknownObject | ServiceUnknown ex) {
-      throw new AgileDeviceNotFoundException("Device not found");
-    } catch (Exception ex) {
-      throw new WebApplicationException("Error on reading data", ex);
-    }
+		try {
+			// hack to remove the protocol from the device id
+			String newId = id.replace("xbee_zigbee", "");
+			return getDevice(newId).Read(sensorName);
+		} catch (AgileNoResultException e) {
+			return null;
+		} catch (UnknownObject | ServiceUnknown ex) {
+			throw new AgileDeviceNotFoundException("Device not found");
+		} catch (Exception ex) {
+			throw new WebApplicationException("Error on reading data", ex);
+		}
 	}
 
 	@GET
@@ -223,17 +230,18 @@ public class Device {
     }
 	}
 
-  @POST
-  @Path("/{sensorName}")
-  public void Write(@PathParam("id") String id, @PathParam("sensorName") String sensorName) throws DBusException {
-    try {
-      getDevice(id).Write();
-    } catch (UnknownObject | ServiceUnknown ex) {
-      throw new AgileDeviceNotFoundException("Device not found");
-    } catch (Exception ex) {
-      throw new WebApplicationException("Error on writing data", ex);
-    }
-  }
+	@POST
+	@Path("/{sensorValue}")
+	public void Write(@PathParam("id") String id, @PathParam("sensorValue") String sensorValue)
+			throws DBusException {
+		try {
+			getDevice(id).Write("", sensorValue);
+		} catch (UnknownObject | ServiceUnknown ex) {
+			throw new AgileDeviceNotFoundException("Device not found");
+		} catch (Exception ex) {
+			throw new WebApplicationException("Error on writing data", ex);
+		}
+	}
 
   @POST
   @Path("/{sensorName}/subscribe")
