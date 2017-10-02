@@ -198,4 +198,9 @@ public class DummyDevice extends DeviceImp implements Device {
   protected String getComponentName(Map<String, String> profile) {
     return DUMMY_COMPONENT;
   }
+
+	@Override
+	protected void DeviceWrite(String componentName, String value) {
+		throw new UnsupportedOperationException();
+	}
 }

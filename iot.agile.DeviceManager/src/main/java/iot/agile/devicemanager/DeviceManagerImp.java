@@ -98,41 +98,42 @@ public class DeviceManagerImp extends AbstractAgileObject implements DeviceManag
 			registeredDev = device.Definition();
 			logger.info("Device already registered:  {}", device.Id());
 		} else {
-		  try {
-	logger.info("HEXIWEAR - Checking device type: "+deviceType+" and overview "+deviceOverview);  
-        
-        String objectName = "iot.agile.DeviceFactory";
-        String objectPath = "/iot/agile/DeviceFactory";
-        logger.info("Connection established: "+connection);
-        DeviceFactory factory = (DeviceFactory) connection.getRemoteObject(objectName, objectPath, DeviceFactory.class);
-        device = factory.getDevice(deviceType, deviceOverview);
-        logger.info("Creating new device: {}", deviceType);
-        if (device != null) {
-          registeredDev = device.Definition();
-          devices.add(registeredDev);
-          logger.info("Created new device: {}", devices);
-        }
-      } catch (Exception e) {
-        logger.error("Can not register device: {}", e.getMessage());
-        e.printStackTrace();
-        }
-		}	  
-    // connect device
-    if (device != null) {
-      final Device dev = device;
-      new Thread(new Runnable() {
-        @Override
-        public void run() {
-          try {
-            dev.Connect();
-            logger.info("Device connected");
-          } catch (Exception e) {
-            logger.error("Error encountered while attempting to connect: {}", e.getMessage());
-          }
-        }
-      }).start();
-    }
-    return registeredDev;
+			try {
+				logger.info("HEXIWEAR - Checking device type: " + deviceType + " and overview " + deviceOverview);
+
+				String objectName = "iot.agile.DeviceFactory";
+				String objectPath = "/iot/agile/DeviceFactory";
+				logger.info("Connection established: " + connection);
+				DeviceFactory factory = (DeviceFactory) connection.getRemoteObject(objectName, objectPath,
+						DeviceFactory.class);
+				device = factory.getDevice(deviceType, deviceOverview);
+				logger.info("Creating new device: {}", deviceType);
+				if (device != null) {
+					registeredDev = device.Definition();
+					devices.add(registeredDev);
+					logger.info("Created new device: {}", devices);
+				}
+			} catch (Exception e) {
+				logger.error("Can not register device: {}", e.getMessage());
+				e.printStackTrace();
+			}
+		}
+		// connect device
+		if (device != null) {
+			final Device dev = device;
+			new Thread(new Runnable() {
+				@Override
+				public void run() {
+					try {
+						dev.Connect();
+						logger.info("Device connected");
+					} catch (Exception e) {
+						logger.error("Error encountered while attempting to connect: {}", e.getMessage());
+					}
+				}
+			}).start();
+		}
+		return registeredDev;
 	}
 
 	/**

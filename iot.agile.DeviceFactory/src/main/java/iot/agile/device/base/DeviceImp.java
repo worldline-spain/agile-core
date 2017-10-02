@@ -303,7 +303,7 @@ public abstract class DeviceImp extends AbstractAgileObject implements Device {
 	@Override
 	public RecordObject Read(String componentName) {
 		RecordObject lastRead = lastReadStore.get(componentName);
-    if (isRecentRead(lastRead)) {
+		if (isRecentRead(lastRead)) {
 			logger.info("Cached read....{}", lastRead);
 			return lastRead;
 		} else {
@@ -319,14 +319,13 @@ public abstract class DeviceImp extends AbstractAgileObject implements Device {
 				synchronized (componentName) {
 					ongoingReads.put(componentName, new CountDownLatch(1));
 					try {
-						data = new RecordObject(deviceID, componentName, DeviceRead(componentName),
-								getMeasurementUnit(componentName), "", System.currentTimeMillis());
+						data = new RecordObject(deviceID, componentName, DeviceRead(componentName), getMeasurementUnit(componentName), "fmt", System.currentTimeMillis());
 						lastReadStore.put(componentName, data);
 						ongoingReads.get(componentName).countDown();
 						synchronized (ongoingReads) {
 							ongoingReads.remove(componentName);
-            }
-            logger.info("New read....{}", data);
+						}
+						logger.info("New read....{}", data);
 						return data;
 					} catch (Exception e) {
 						e.printStackTrace();
@@ -334,7 +333,7 @@ public abstract class DeviceImp extends AbstractAgileObject implements Device {
 				}
 			}
 		}
- 			throw new AgileNoResultException("Unable to read value "+componentName );
+		throw new AgileNoResultException("Unable to read value " + componentName);
 	}
 
 	/**
@@ -373,6 +372,7 @@ public abstract class DeviceImp extends AbstractAgileObject implements Device {
 	 * @return
 	 */
 	protected abstract String DeviceRead(String componentName);
+	protected abstract void DeviceWrite(String componentName, String value);
 
 	/**
 	 * Get measurement unit method to be implemented by child class
@@ -394,8 +394,8 @@ public abstract class DeviceImp extends AbstractAgileObject implements Device {
 	 *
 	 * @see iot.agile.protocol.ble.device.IDevice#Write()
 	 */
-	public void Write() {
-		logger.debug("Device. Write not implemented");
+	public void Write(String sensorName, String sensorValue) {
+		DeviceWrite(sensorName, sensorValue);
 	}
 
 	/**

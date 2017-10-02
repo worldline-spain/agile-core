@@ -71,7 +71,8 @@ public class ProtocolManagerImp extends AbstractAgileObject implements ProtocolM
 	/**
 	 * ZB Protocol Agile ID
 	 */
-	public static final String ZB_PROTOCOL_ID = "iot.agile.protocol.ZB";
+	// JES (Pilot D) public static final String ZB_PROTOCOL_ID = "iot.agile.protocol.ZB";
+	public static final String ZB_PROTOCOL_ID = "iot.agile.Protocol.XBee_ZigBee.socket0";
 
 	/**
 	 * Dummy Protocol Agile ID 
@@ -93,7 +94,7 @@ public class ProtocolManagerImp extends AbstractAgileObject implements ProtocolM
 
 		// for demo purposes
 		//protocolManager.Add(BLE_PROTOCOL_ID);
-		protocolManager.Add(DUMMY_PROTOCOL_ID);
+		//protocolManager.Add(DUMMY_PROTOCOL_ID);
  	}
 
 	public ProtocolManagerImp() throws DBusException {
@@ -223,11 +224,12 @@ public class ProtocolManagerImp extends AbstractAgileObject implements ProtocolM
 					protocols.add(new ProtocolOverview("BLE", "Bluetooth LE", protocolId, "Avaliable"));
 					break;
 				case ZB_PROTOCOL_ID:
-					protocols.add(new ProtocolOverview("ZB", "ZigBee", protocolId, "Avaliable"));
+					// JES (Pilot D) protocols.add(new ProtocolOverview("ZB", "ZigBee", protocolId, "Avaliable"));
+					protocols.add(new ProtocolOverview("XBee_ZigBee", "ZigBee", "iot.agile.Protocol" , "Avaliable"));
 					break;
 				case DUMMY_PROTOCOL_ID:
-          protocols.add(new ProtocolOverview("Dummy", "Dummy", protocolId, "Avaliable"));
-          break;
+			        protocols.add(new ProtocolOverview("Dummy", "Dummy", protocolId, "Avaliable"));
+			        break;
 			}
 		}
 	}

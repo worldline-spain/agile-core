@@ -415,4 +415,9 @@ public class TISensorTag extends AgileBLEDevice implements Device {
     }
     return null;
   }
+
+	@Override
+	protected void DeviceWrite(String componentName, String value) {
+		throw new UnsupportedOperationException();
+	}
 }
