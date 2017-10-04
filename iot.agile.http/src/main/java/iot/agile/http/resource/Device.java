@@ -28,6 +28,7 @@ package iot.agile.http.resource;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -39,22 +40,17 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 
-import org.freedesktop.DBus.Error.UnknownObject;
 import org.freedesktop.DBus.Error.ServiceUnknown;
+import org.freedesktop.DBus.Error.UnknownObject;
 import org.freedesktop.dbus.Variant;
 import org.freedesktop.dbus.exceptions.DBusException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 import iot.agile.exception.AgileDeviceNotFoundException;
 import iot.agile.exception.AgileNoResultException;
-import iot.agile.http.resource.DeviceManager.RegisterPayload;
 import iot.agile.http.service.DbusClient;
 import iot.agile.object.DeviceComponent;
-import iot.agile.object.DeviceOverview;
 import iot.agile.object.RecordObject;
 import iot.agile.object.StatusType;
 
@@ -231,9 +227,7 @@ public class Device {
 	}
 
 	@POST
-	@Path("/{sensorValue}")
-	public void Write(@PathParam("id") String id, @PathParam("sensorValue") String sensorValue)
-			throws DBusException {
+	public void Write(@PathParam("id") String id, String sensorValue) throws DBusException {
 		try {
 			getDevice(id).Write("", sensorValue);
 		} catch (UnknownObject | ServiceUnknown ex) {
