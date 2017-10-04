@@ -36,15 +36,11 @@ public class ArduinoDevice extends DeviceImp implements Device {
 		this.protocol = ZB_PROTOCOL_ID;
 		String devicePath = AGILE_DEVICE_BASE_BUS_PATH + ZB + deviceOverview.id.replace(":", "");
 	
-		profile.add( new DeviceComponent("01","units"));
-		profile.add( new DeviceComponent("02","units"));
-		profile.add( new DeviceComponent("03","units"));
-		profile.add( new DeviceComponent("04","units"));
-		profile.add( new DeviceComponent("05","units"));
-		profile.add( new DeviceComponent("06","units"));
-		profile.add( new DeviceComponent("07","units"));
-		profile.add( new DeviceComponent("08","units"));
-		profile.add( new DeviceComponent("09","units"));
+		profile.add( new DeviceComponent("TEMPERATURE","ºC"));
+		profile.add( new DeviceComponent("POWER","A"));
+		profile.add( new DeviceComponent("PRESENCE","?"));
+		profile.add( new DeviceComponent("STOCK","units"));
+		profile.add( new DeviceComponent("LIGHT","?"));
 
 		dbusConnect(deviceAgileID, devicePath, this);
 		deviceProtocol = (Protocol) connection.getRemoteObject(ZB_PROTOCOL_ID, ZB_PROTOCOL_PATH, Protocol.class);		
