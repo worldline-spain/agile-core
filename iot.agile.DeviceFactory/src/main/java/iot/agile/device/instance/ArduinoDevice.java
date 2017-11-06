@@ -41,6 +41,7 @@ public class ArduinoDevice extends DeviceImp implements Device {
 		profile.add( new DeviceComponent("presence","?"));
 		profile.add( new DeviceComponent("stock","units"));
 		profile.add( new DeviceComponent("light","?"));
+		profile.add( new DeviceComponent("beacon","?"));
 
 		dbusConnect(deviceAgileID, devicePath, this);
 		deviceProtocol = (Protocol) connection.getRemoteObject(ZB_PROTOCOL_ID, ZB_PROTOCOL_PATH, Protocol.class);		
